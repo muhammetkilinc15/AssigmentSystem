@@ -23,8 +23,38 @@ int main()
             displayFoodMenu();
             break;
         case 2:
+            printf("Enter table ID: ");
+            scanf("%s",tableId);
+            createTable(tableId);
+            break;
+        case 3:
+            printf("Enter tableID: ");
+            scanf("%s",tableId);
+            deleteTable(tableId);
+            break;
+        case 4:
+            checkNewOrder();
+            break;
+        case 5:
+            printf("Enter table ID to show orders: ");
+            scanf("%s",tableId);
+            showOrderListTable(tableId);
+            break;
+        case 6:
+            showAllInvocies();
+            break;
+         case 7:
+            printf("Enter food ID to update: ");
+            scanf("%d",foodId);
+            printf("Enter new fee: ");
+            scanf("%f",fee);
+            printf("Enter new fee: ");
+            scanf("%f",fee);
+
             break;
         }
+
+
     }while(selection !=8);
     return 0;
 }

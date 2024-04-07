@@ -18,9 +18,24 @@ typedef struct takenOrders
     bool isActive;
 }takenOrders;
 
+
+void writeToLogFile(char text[]);
+
+
+
+void displaySingleFood(food food);
 void displayFoodMenu();
-void showOrderListTable();
+
+
+void showOrderTable(takenOrders currentTOrders);
+void showOrderListTable(char tableID[]);
+
+
+
 bool isExistTable(char tableID[]);
+
 bool isExistFood(int foodId);
+
+
 
 #endif // COMMON_H_INCLUDED
