@@ -35,3 +35,10 @@ void displayFoodMenu()
     closedir(dir);
 }
 
+void writeToLogFile(char text[])
+{
+    FILE *file = fopen(logTtxt,"a+");
+	fprintf(file,"%s",text);
+	fclose(file);
+}
+

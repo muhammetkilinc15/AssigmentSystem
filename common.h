@@ -22,5 +22,6 @@ void displayFoodMenu();
 void showOrderListTable();
 bool isExistTable(char tableID[]);
 bool isExistFood(int foodId);
+void writeToLogFile(char text[]);
 
 #endif // COMMON_H_INCLUDED
