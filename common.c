@@ -65,7 +65,6 @@ void showOrderTable(takenOrders currentTOrders)
 }
 
 
-
 // This method print the food
 void displaySingleFood(food food)
 {
@@ -73,7 +72,6 @@ void displaySingleFood(food food)
     printf("Food name : %s\n",food.foodName);
     printf("Food fee : %.2f\n",food.foodPrice);
 }
-
 
 // This function print the menu
 void displayFoodMenu()
