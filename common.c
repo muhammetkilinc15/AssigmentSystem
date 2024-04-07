@@ -13,6 +13,7 @@ char *takenOrdersTxt = "TakenOrders.txt";
 char *logTtxt = "log.txt";
 int numberOfFoods = 4;
 
+// This method print menu 
 void displayFoodMenu()
 {
     DIR *dir;
