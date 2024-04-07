@@ -23,6 +23,7 @@ void displayFoodMenu()
     strcat(cwd,foodsTxt);
     food currentFood;
     FILE *file = fopen(cwd,"rb+");
+    fread(&currentFood, sizeof(currentFood),1,file);
     while(!feof(file))
     {
         printf("Food id : %d\n",currentFood.foodID);
