@@ -33,11 +33,24 @@ int main()
             deleteTable(tableId);
             break;
         case 4:
+            checkNewOrder();
             break;
         case 5:
             printf("Enter table ID to show orders: ");
             scanf("%s",tableId);
             showOrderListTable(tableId);
+            break;
+        case 6:
+            showAllInvocies();
+            break;
+         case 7:
+            printf("Enter food ID to update: ");
+            scanf("%d",foodId);
+            printf("Enter new fee: ");
+            scanf("%f",fee);
+            printf("Enter new fee: ");
+            scanf("%f",fee);
+
             break;
         }
 

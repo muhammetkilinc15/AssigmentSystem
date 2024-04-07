@@ -21,14 +21,6 @@ typedef struct takenOrders
 
 void writeToLogFile(char text[]);
 
-<<<<<<< HEAD
-void displaySingleFood(food food);
-
-void displayFoodMenu();
-
-void showOrderListTable(char tableID[]);
-
-=======
 
 
 void displaySingleFood(food food);
@@ -40,11 +32,9 @@ void showOrderListTable(char tableID[]);
 
 
 
->>>>>>> mami
 bool isExistTable(char tableID[]);
 
 bool isExistFood(int foodId);
-void writeToLogFile(char text[]);
 
 
 
