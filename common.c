@@ -13,7 +13,63 @@ char *takenOrdersTxt = "TakenOrders.txt";
 char *logTtxt = "log.txt";
 int numberOfFoods = 4;
 
-// This method print menu 
+
+// This function appends the given text to a file named "log.txt".
+void writeToLogFile(char text[])
+{
+    FILE *file = fopen(logTtxt,"a+");
+    fprintf(file,"%s",text);
+    fclose(file);
+}
+// dosya var ise true , yok ise false
+bool isExistTable(char tableID[])
+{
+    return opendir(tableID)!=NULL;
+}
+
+
+void showOrderListTable(char tableID[])
+{
+    if(isExistTable(tableID)==true)
+    {
+        strcat(tableID,"//");
+        strcat(tableID,ordersTxt);
+        FILE *file = fopen(tableID,"rb+");
+        takenOrders currentTOrders;
+        fread(&currentTOrders,sizeof(currentTOrders),1,file);
+        int i=1;
+        while(!feof(file))
+        {
+            printf("Orders: \n");
+            printf("Food %d\n",i);
+            i++;
+            printf("Table Id : %d\n",currentTOrders.tableID);
+            displaySingleFood(currentTOrders.f);
+            printf("Amount: %d\n",currentTOrders.quantity);
+            printf("Is confirmed: %s\n",currentTOrders.isConfirmed==true ? "Yes" : "No");
+            printf("Is active: %s\n",currentTOrders.isActive==true ? "Yes" : "No");
+            fread(&currentTOrders,sizeof(currentTOrders),1,file);
+        }
+    }
+    else
+    {
+        printf("There is no table with the given id!!!\n");
+
+    }
+}
+
+
+
+// This method print the food
+void displaySingleFood(food food)
+{
+    printf("Food id : %d\n",food.foodID);
+    printf("Food name : %s\n",food.foodName);
+    printf("Food fee : %.2f\n",food.foodPrice);
+}
+
+
+// This function print the menu
 void displayFoodMenu()
 {
     DIR *dir;
@@ -24,13 +80,11 @@ void displayFoodMenu()
     strcat(cwd,foodsTxt);
     food currentFood;
     FILE *file = fopen(cwd,"rb+");
-    fread(&currentFood, sizeof(currentFood),1,file);
-    while(!feof(file))
+    for(int i = 0; i<numberOfFoods;i++)
     {
-        printf("Food id : %d\n",currentFood.foodID);
-        printf("Food name : %s\n",currentFood.foodName);
-        printf("Food fee : %.2f\n",currentFood.foodPrice);
         fread(&currentFood, sizeof(currentFood),1,file);
+        displaySingleFood(currentFood);
+
     }
     fclose(file);
     closedir(dir);
