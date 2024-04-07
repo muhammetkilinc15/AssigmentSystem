@@ -38,6 +38,7 @@ void showOrderListTable(char tableID[])
         takenOrders currentTOrders;
         fread(&currentTOrders,sizeof(currentTOrders),1,file);
         int i=1;
+<<<<<<< HEAD
         while(!feof(file))
         {
             printf("Orders: \n");
@@ -48,6 +49,14 @@ void showOrderListTable(char tableID[])
             printf("Amount: %d\n",currentTOrders.quantity);
             printf("Is confirmed: %s\n",currentTOrders.isConfirmed==true ? "Yes" : "No");
             printf("Is active: %s\n",currentTOrders.isActive==true ? "Yes" : "No");
+=======
+        printf("Orders: \n");
+        while(!feof(file))
+        {
+            printf("Food %d\n",i);
+            i++;
+            showOrderTable(currentTOrders);
+>>>>>>> mami
             fread(&currentTOrders,sizeof(currentTOrders),1,file);
         }
     }
@@ -58,6 +67,19 @@ void showOrderListTable(char tableID[])
     }
 }
 
+<<<<<<< HEAD
+=======
+void showOrderTable(takenOrders currentTOrders)
+{
+    printf("Table Id : %d\n",currentTOrders.tableID);
+    displaySingleFood(currentTOrders.f);
+    printf("Amount: %d\n",currentTOrders.quantity);
+    printf("Is confirmed: %s\n",currentTOrders.isConfirmed==true ? "Yes" : "No");
+    printf("Is active: %s\n",currentTOrders.isActive==true ? "Yes" : "No");
+
+}
+
+>>>>>>> mami
 
 
 // This method print the food

@@ -44,7 +44,11 @@ void deleteTable(char tableID[])
         strcat(temp,ordersTxt);
         remove(temp); // orders.txt is deleted...
         rmdir(tableID); // table is deleted...
+<<<<<<< HEAD
          printf("Table %s is deleted successfully....\n",tableID);
+=======
+        printf("Table %s is deleted successfully....\n",tableID);
+>>>>>>> mami
         char text[200];
 		sprintf(text,"Album %s is deleted successfully....\n",tableID);
 		writeToLogFile(text);
@@ -54,6 +58,42 @@ void deleteTable(char tableID[])
         printf("There is no table with the given id!!!\n");
     }
 }
+<<<<<<< HEAD
 
+=======
+void checkNewOrder()
+{
+    FILE *file = fopen(takenOrdersTxt,"rb+");
+    takenOrders current;
+    fread(&current,sizeof(current),1,file);
+    printf("size: %d \n",sizeof(current));
+    showOrderTable(current);
+    printf("Confirm Order?\nYes : 1\nNo: 0\n");
+    printf("Warning: Unconfirmed orders will be canceled!!!\nWarning: Approved orders are assigned to the relevant table!!!\n");
+    int selection=-1;
+    scanf("%d",selection);
+    fprintf(file,"");
+}
+
+void showAllInvocies()
+{
+    DIR *dir;
+    char cwd[50];
+    getcwd(cwd,50);
+    dir = opendir(cwd);
+    strcat(cwd,closedOrdersTxt);
+    FILE *file = fopen(cwd,"rb+");
+    float price=0.0;
+    fread(&price,sizeof(price),1,file);
+    printf("All payment information : \n");
+    while(!feof(file))
+    {
+        printf("TOTAL FEE: %.2f",price);
+        fread(&price,sizeof(price),1,file);
+    }
+    fclose(file);
+    closedir(dir);
+}
+>>>>>>> mami
 
 
