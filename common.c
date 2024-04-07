@@ -21,10 +21,30 @@ void writeToLogFile(char text[])
     fprintf(file,"%s",text);
     fclose(file);
 }
+
+
 // dosya var ise true , yok ise false
 bool isExistTable(char tableID[])
 {
     return opendir(tableID)!=NULL;
+}
+
+bool isExistFood(int foodID)
+{
+    FILE *file = fopen(foodsTxt,"rb+");
+    food current;
+    fread(&current,sizeof(current),1,file);
+    while(!feof(file))
+    {
+        if(foodID == current.foodID)
+        {
+            return true;
+        }
+        fread(&current,sizeof(current),1,file);
+    }
+    fclose(file);
+    return false;
+
 }
 
 
@@ -46,6 +66,7 @@ void showOrderListTable(char tableID[])
             showOrderTable(currentTOrders);
             fread(&currentTOrders,sizeof(currentTOrders),1,file);
         }
+        fclose(file);
     }
     else
     {
@@ -73,6 +94,7 @@ void displaySingleFood(food food)
     printf("Food fee : %.2f\n",food.foodPrice);
 }
 
+
 // This function print the menu
 void displayFoodMenu()
 {
@@ -88,7 +110,6 @@ void displayFoodMenu()
     {
         fread(&currentFood, sizeof(currentFood),1,file);
         displaySingleFood(currentFood);
-
     }
     fclose(file);
     closedir(dir);
