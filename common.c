@@ -21,6 +21,8 @@ void writeToLogFile(char text[])
     fprintf(file,"%s",text);
     fclose(file);
 }
+
+
 // dosya var ise true , yok ise false
 bool isExistTable(char tableID[])
 {
@@ -40,6 +42,10 @@ bool isExistFood(int foodID)
         }
         fread(&current,sizeof(current),1,file);
     }
+<<<<<<< HEAD
+=======
+    fclose(file);
+>>>>>>> mami
     return false;
 
 }
@@ -63,6 +69,7 @@ void showOrderListTable(char tableID[])
             showOrderTable(currentTOrders);
             fread(&currentTOrders,sizeof(currentTOrders),1,file);
         }
+        fclose(file);
     }
     else
     {
@@ -80,7 +87,6 @@ void showOrderTable(takenOrders currentTOrders)
     printf("Is active: %s\n",currentTOrders.isActive==true ? "Yes" : "No");
 
 }
-
 
 
 // This method print the food
@@ -107,7 +113,6 @@ void displayFoodMenu()
     {
         fread(&currentFood, sizeof(currentFood),1,file);
         displaySingleFood(currentFood);
-
     }
     fclose(file);
     closedir(dir);

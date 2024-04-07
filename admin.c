@@ -59,33 +59,75 @@ void checkNewOrder()
     FILE *file = fopen(takenOrdersTxt,"rb+");
     takenOrders current;
     fread(&current,sizeof(current),1,file);
-    printf("size: %d \n",sizeof(current));
+    printf("size %d:  \n",sizeof(current));
     showOrderTable(current);
-    printf("Confirm Order?\nYes : 1\nNo: 0\n");
-    printf("Warning: Unconfirmed orders will be canceled!!!\nWarning: Approved orders are assigned to the relevant table!!!\n");
-    int selection=-1;
-    scanf("%d",selection);
-    fprintf(file,"");
+    if(sizeof(current)==0)
+    {
+        printf("No new orders...\n");
+    }
+    else
+    {
+        printf("Confirm Order?\nYes : 1\nNo  : 0\n");
+        printf("Warning: Unconfirmed orders will be canceled!!!\nWarning: Approved orders are assigned to the relevant table!!!\n");
+        int selection=-1;
+        scanf("%d",selection);
+        if(selection==1)
+        {
+        char temp[100];
+        strcat(temp,current.tableID);
+        strcat(temp,"//");
+        strcat(temp,ordersTxt);
+        FILE *file = fopen(temp,"ab+");
+        fprintf(file,"%s","sdfsd");
+        fclose(file);
+        }
+    }
 }
 
 void showAllInvocies()
 {
-    DIR *dir;
-    char cwd[50];
-    getcwd(cwd,50);
-    dir = opendir(cwd);
-    strcat(cwd,closedOrdersTxt);
-    FILE *file = fopen(cwd,"rb+");
-    float price=0.0;
-    fread(&price,sizeof(price),1,file);
-    printf("All payment information : \n");
-    while(!feof(file))
-    {
-        printf("TOTAL FEE: %.2f",price);
-        fread(&price,sizeof(price),1,file);
+    FILE *file = fopen(closedOrdersTxt, "r");
+    float current;
+    printf("All payment information:\n");
+    // Dosyadan float deðerleri oku ve ekrana bastýr
+    while (fscanf(file, "%f", &current) == 1) {
+        printf("%.2f\n", current);
     }
+
     fclose(file);
-    closedir(dir);
+}
+
+void updateFood(int foodID,float fee)
+{
+    if(isExistFood(foodID)==true)
+    {
+        FILE *file = fopen(foodsTxt, "rb+");
+        food current;
+        fread(&current, sizeof(current),1,file);
+        bool isUpdated = false;
+        while( !feof(file))
+        {
+            if(foodID == current.foodID)
+            {
+                current.foodPrice = fee;
+                fseek(file, -sizeof(current), SEEK_CUR);
+                fwrite(&current,sizeof(current),1,file);
+                isUpdated = true;
+            }
+            fread(&current, sizeof(current),1,file);
+        }
+        fclose(file);
+        if(isUpdated == true)
+		{
+			printf("Food is updated......\n");
+			char text[200];
+			sprintf(text,"Fee of the food %d is updated as %f\n",foodID,fee);
+			writeToLogFile(text);
+		}
+    }else
+    {
+         printf("There is no food with the given food ID!!!\n");
+    }
 }
 
 

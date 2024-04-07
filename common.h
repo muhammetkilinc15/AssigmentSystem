@@ -32,7 +32,6 @@ void showOrderListTable(char tableID[]);
 
 
 bool isExistTable(char tableID[]);
-
 bool isExistFood(int foodId);
 
 
