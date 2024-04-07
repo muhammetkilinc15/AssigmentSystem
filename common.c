@@ -27,6 +27,23 @@ bool isExistTable(char tableID[])
     return opendir(tableID)!=NULL;
 }
 
+bool isExistFood(int foodID)
+{
+    FILE *file = fopen(foodsTxt,"rb+");
+    food current;
+    fread(&current,sizeof(current),1,file);
+    while(!feof(file))
+    {
+        if(foodID == current.foodID)
+        {
+            return true;
+        }
+        fread(&current,sizeof(current),1,file);
+    }
+    return false;
+
+}
+
 
 void showOrderListTable(char tableID[])
 {
