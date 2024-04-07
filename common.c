@@ -36,6 +36,7 @@ void displayFoodMenu()
     closedir(dir);
 }
 
+//Writing operations to log.txt
 void writeToLogFile(char text[])
 {
     FILE *file = fopen(logTtxt,"a+");
