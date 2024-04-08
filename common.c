@@ -42,10 +42,7 @@ bool isExistFood(int foodID)
         }
         fread(&current,sizeof(current),1,file);
     }
-<<<<<<< HEAD
-=======
     fclose(file);
->>>>>>> mami
     return false;
 
 }
@@ -80,7 +77,7 @@ void showOrderListTable(char tableID[])
 
 void showOrderTable(takenOrders currentTOrders)
 {
-    printf("Table Id : %d\n",currentTOrders.tableID);
+    printf("Table Id : %s\n",currentTOrders.tableID);
     displaySingleFood(currentTOrders.f);
     printf("Amount: %d\n",currentTOrders.quantity);
     printf("Is confirmed: %s\n",currentTOrders.isConfirmed==true ? "Yes" : "No");
