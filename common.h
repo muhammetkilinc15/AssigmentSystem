@@ -22,6 +22,7 @@ typedef struct takenOrders
 void writeToLogFile(char text[]);
 
 
+
 void displaySingleFood(food food);
 void displayFoodMenu();
 
