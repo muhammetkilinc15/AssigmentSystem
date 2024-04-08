@@ -64,6 +64,7 @@ void showOrderListTable(char tableID[])
             printf("Food %d\n",i);
             i++;
             showOrderTable(currentTOrders);
+            printf("------------------------\n");
             fread(&currentTOrders,sizeof(currentTOrders),1,file);
         }
         fclose(file);

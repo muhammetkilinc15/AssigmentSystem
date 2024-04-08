@@ -56,30 +56,50 @@ void deleteTable(char tableID[])
 }
 void checkNewOrder()
 {
-    FILE *file = fopen(takenOrdersTxt,"rb+");
+    FILE *file = fopen(takenOrdersTxt, "rb+");
     takenOrders current;
-    fread(&current,sizeof(current),1,file);
-    printf("size %d:  \n",sizeof(current));
-    showOrderTable(current);
-    if(sizeof(current)==0)
-    {
+    size_t bytesRead = fread(&current, sizeof(current), 1, file);
+
+    if (bytesRead == 0) {
+        printf("Size: 0\n");
         printf("No new orders...\n");
+        return;
     }
     else
     {
+
+        printf("size %d  \n", sizeof(current));
+        showOrderTable(current);
+        fclose(file);
+        // takenOrders.txt dosyasının içeriğini boşalt
+        file = fopen(takenOrdersTxt, "w+");
+        fclose(file);
+
         printf("Confirm Order?\nYes : 1\nNo  : 0\n");
         printf("Warning: Unconfirmed orders will be canceled!!!\nWarning: Approved orders are assigned to the relevant table!!!\n");
-        int selection=-1;
-        scanf("%d",selection);
-        if(selection==1)
+
+        int selection = -1;
+        scanf("%d", &selection);
+
+        if (selection == 1) {
+            printf("New order is taken successfully....\n");
+            char temp[100];
+            strcpy(temp, current.tableID);
+            strcat(temp, "//");
+            strcat(temp, ordersTxt);
+            current.isConfirmed=true;
+            // orders.txt dosyasını "ab+" modunda aç, current verisini yaz ve kapat
+            FILE *ordersFile = fopen(temp, "ab+");
+            if (ordersFile == NULL) {
+                perror("Error opening file");
+                return;
+            }
+            fwrite(&current, sizeof(current), 1, ordersFile);
+            fclose(ordersFile);
+        }
+        else
         {
-        char temp[100];
-        strcat(temp,current.tableID);
-        strcat(temp,"//");
-        strcat(temp,ordersTxt);
-        FILE *file = fopen(temp,"ab+");
-        fprintf(file,"%s","sdfsd");
-        fclose(file);
+              printf("New order is cancelled....\n");
         }
     }
 }
@@ -89,11 +109,9 @@ void showAllInvocies()
     FILE *file = fopen(closedOrdersTxt, "r");
     float current;
     printf("All payment information:\n");
-    // Dosyadan float de�erleri oku ve ekrana bast�r
     while (fscanf(file, "%f", &current) == 1) {
         printf("%.2f\n", current);
     }
-
     fclose(file);
 }
 
@@ -113,6 +131,7 @@ void updateFood(int foodID,float fee)
                 fseek(file, -sizeof(current), SEEK_CUR);
                 fwrite(&current,sizeof(current),1,file);
                 isUpdated = true;
+                break;
             }
             fread(&current, sizeof(current),1,file);
         }
