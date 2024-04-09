@@ -43,7 +43,7 @@ int main()
         case 6:
             showAllInvocies();
             break;
-         case 7:
+        case 7:
             printf("Enter food ID to update: ");
             scanf("%d",&foodId);
             printf("Enter new fee: ");

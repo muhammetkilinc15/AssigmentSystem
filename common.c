@@ -14,6 +14,7 @@ char *logTtxt = "log.txt";
 int numberOfFoods = 4;
 
 
+
 // This function appends the given text to a file named "log.txt".
 void writeToLogFile(char text[])
 {
