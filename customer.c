@@ -14,32 +14,33 @@ extern char *logTtxt;
 
 void newOrder(char tableId[],int foodID,int amount)
 {
-   FILE *file = fopen(takenOrdersTxt,"ab+");
+   FILE *fileTakenOrders = fopen(takenOrdersTxt,"ab+");
    takenOrders current;
-   int size=fread(&current,sizeof(current),1,file);
+   int size=fread(&current,sizeof(current),1,fileTakenOrders);
    if(size==0)
    {
-       takenOrders newOr;
-    FILE *file2 = fopen(foodsTxt,"rb+");
+	
+    FILE *fileFoods = fopen(foodsTxt,"rb+");
     food currentF;
-    fread(&current,sizeof(current),1,file);
-    while(!feof(file))
+    fread(&currentF,sizeof(currentF),1,fileFoods);
+    while(!feof(fileFoods))
     {
         if(foodID == currentF.foodID)
         {
             break;                  //AYNI İŞLEM YAPILIYORRR
         }
-        fread(&current,sizeof(current),1,file);
-    } fclose(file2);
-       newOr.f=currentF;
-       newOr.isActive=true;
-       newOr.isConfirmed=false;
-       newOr.quantity=amount;
-       strcpy(newOr.tableID,tableId);
-
-       fwrite(&newOr,sizeof(takenOrders),1,file);//DOSYAYA YAZARKEN YEMEK İSMİNİ BİNARY YAZDIRIYOR
-       fclose(file);
-        printf("New order is added successfully....\n");
+        fread(&currentF,sizeof(currentF),1,fileFoods);
+    } 
+	   fclose(fileFoods);
+	   current.f = currentF;
+       current.isActive=true;
+       current.isConfirmed=false;
+       current.quantity=amount;
+       strcpy(current.tableID,tableId);
+		
+       fwrite(&current,sizeof(current),1,fileTakenOrders);//DOSYAYA YAZARKEN YEMEK İSMİNİ BİNARY YAZDIRIYOR
+       fclose(fileTakenOrders);
+       printf("New order is added successfully....\n");
        char text[200];
        sprintf(text,"New order for table %s is taken successfully....\n",tableId);
        writeToLogFile(text);
