@@ -20,7 +20,7 @@ void newOrder(char tableId[],int foodID,int amount)
    if(size==0)
    {
        takenOrders newOr;
-       FILE *file2 = fopen(foodsTxt,"rb+");
+    FILE *file2 = fopen(foodsTxt,"rb+");
     food currentF;
     fread(&current,sizeof(current),1,file);
     while(!feof(file))
