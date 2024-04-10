@@ -14,32 +14,32 @@ extern char *logTtxt;
 
 void newOrder(char tableId[],int foodID,int amount)
 {
-   FILE *fileTakenOrders = fopen(takenOrdersTxt,"ab+");
+   FILE *file = fopen(takenOrdersTxt,"ab+");
    takenOrders current;
-   int size=fread(&current,sizeof(current),1,fileTakenOrders);
+   int size=fread(&current,sizeof(current),1,file);
    if(size==0)
    {
 	
-    FILE *fileFoods = fopen(foodsTxt,"rb+");
+    FILE *file2 = fopen(foodsTxt,"rb+");
     food currentF;
-    fread(&currentF,sizeof(currentF),1,fileFoods);
-    while(!feof(fileFoods))
+    fread(&currentF,sizeof(currentF),1,file2);
+    while(!feof(file2))
     {
         if(foodID == currentF.foodID)
         {
             break;                  //AYNI İŞLEM YAPILIYORRR
         }
-        fread(&currentF,sizeof(currentF),1,fileFoods);
+        fread(&currentF,sizeof(currentF),1,file2);
     } 
-	   fclose(fileFoods);
+	   fclose(file2);
 	   current.f = currentF;
        current.isActive=true;
        current.isConfirmed=false;
        current.quantity=amount;
        strcpy(current.tableID,tableId);
 		
-       fwrite(&current,sizeof(current),1,fileTakenOrders);//DOSYAYA YAZARKEN YEMEK İSMİNİ BİNARY YAZDIRIYOR
-       fclose(fileTakenOrders);
+       fwrite(&current,sizeof(current),1,file);//DOSYAYA YAZARKEN YEMEK İSMİNİ BİNARY YAZDIRIYOR
+       fclose(file);
        printf("New order is added successfully....\n");
        char text[200];
        sprintf(text,"New order for table %s is taken successfully....\n",tableId);
@@ -96,21 +96,25 @@ void payBill(char tableId[])
 {
     strcat(tableId,"//");
     strcat(tableId,ordersTxt);
-    FILE *file = fopen(tableId,"ab+");
+    FILE *file = fopen(tableId,"rb+");
     takenOrders current;
     fread(&current, sizeof(current),1,file);
     float billAmount=0;
+	
         while( !feof(file))
         {
-            billAmount+=(current.quantity * current.f.foodPrice);
+			if(current.isActive)
+			{
+				billAmount+= (current.f.foodPrice * current.quantity);
+			}
             fread(&current, sizeof(current),1,file);
         }
 
-        fclose(file);
+    fclose(file);
     file = fopen(tableId, "w+");
     fclose(file);
-    printf("TOTAL FEE:%f",billAmount);
-    printf("Payment received successfully....");
+    printf("TOTAL FEE:%.2f\n",billAmount);
+    printf("Payment received successfully....\n");
     char text[200];
     sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE :%f\n",tableId,billAmount);
     writeToLogFile(text);
@@ -122,7 +126,7 @@ void cancelOrder(char tableId[],int foodId)
     dir= opendir(tableId);
     strcat(tableId,"//");
     strcat(tableId,ordersTxt);
-    FILE *file = fopen(tableId,"a+b");
+    FILE *file = fopen(tableId,"rb+");
     takenOrders current;
         fread(&current, sizeof(current),1,file);
         bool isCanceled = false;
@@ -130,6 +134,7 @@ void cancelOrder(char tableId[],int foodId)
         {
             if(foodId == current.f.foodID)
             {
+				printf("sdfsdfs\n");
                 current.isActive=false;
                 fseek(file, -sizeof(current), SEEK_CUR);
                 fwrite(&current,sizeof(current),1,file);
@@ -138,9 +143,9 @@ void cancelOrder(char tableId[],int foodId)
             fread(&current, sizeof(current),1,file);
         }
         fclose(file);
-         if(isCanceled)
+        if(isCanceled)
 		{
-            printf("Order is canceled...");
+            printf("Order is canceled...\n");
 			char text[200];
 			sprintf(text,"Order of the food with id %d in table %s is canceled \n",foodId,tableId);
 			writeToLogFile(text);
