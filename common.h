@@ -21,7 +21,7 @@ typedef struct takenOrders
 
 void writeToLogFile(char text[]);
 
-
+void operationForClosedOrders(int type,float billAmount);
 
 void displaySingleFood(food food);
 void displayFoodMenu();
