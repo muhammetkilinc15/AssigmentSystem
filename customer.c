@@ -27,7 +27,7 @@ void newOrder(char tableId[],int foodID,int amount)
     {
         if(foodID == currentF.foodID)
         {
-            break;                  //AYNI İŞLEM YAPILIYORRR
+            break;                  
         }
         fread(&currentF,sizeof(currentF),1,file2);
     } 
@@ -38,7 +38,7 @@ void newOrder(char tableId[],int foodID,int amount)
        current.quantity=amount;
        strcpy(current.tableID,tableId);
 		
-       fwrite(&current,sizeof(current),1,file);//DOSYAYA YAZARKEN YEMEK İSMİNİ BİNARY YAZDIRIYOR
+       fwrite(&current,sizeof(current),1,file);
        fclose(file);
        printf("New order is added successfully....\n");
        char text[200];
@@ -64,7 +64,7 @@ void updateAmount(char tableID[],int foodID,int amount)
         bool isUpdated = false;
         while( !feof(file))
         {
-            if(foodID == current.f.foodID)//FoodId saçma değer döndürüyor
+            if(foodID == current.f.foodID)
             {
                 current.quantity = amount;
                 fseek(file, -sizeof(current), SEEK_CUR);
@@ -113,7 +113,9 @@ void payBill(char tableId[])
     fclose(file);
     file = fopen(tableId, "w+");
     fclose(file);
+
     printf("TOTAL FEE:%.2f\n",billAmount);
+    
     printf("Payment received successfully....\n");
     char text[200];
     sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE :%f\n",tableId,billAmount);
@@ -134,7 +136,7 @@ void cancelOrder(char tableId[],int foodId)
         {
             if(foodId == current.f.foodID)
             {
-				printf("sdfsdfs\n");
+				
                 current.isActive=false;
                 fseek(file, -sizeof(current), SEEK_CUR);
                 fwrite(&current,sizeof(current),1,file);

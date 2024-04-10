@@ -79,7 +79,7 @@ int main()
         case 6:
             printf("Enter table ID: ");
             scanf("%s",&tableId);
-            printf("Enter food ID to update: ");
+            printf("Enter food ID to cancel: ");
             scanf("%d",&foodId);
              if(!isExistTable(tableId))
             {
