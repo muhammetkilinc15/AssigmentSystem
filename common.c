@@ -39,7 +39,6 @@ void operationForClosedOrders(int type,float billAmount)
 			}
 	}else
 	{
-		printf("Burası ortak alan \n");
 		file = fopen(closedOrdersTxt,"a+");
 		fprintf(file,"%f\n",billAmount);
 	}
