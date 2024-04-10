@@ -23,6 +23,30 @@ void writeToLogFile(char text[])
     fclose(file);
 }
 
+// reading or writing closed orders 
+void operationForClosedOrders(int type,float billAmount)
+{
+	FILE *file ;
+    float current;
+	
+	if(type==0)
+	{
+			file = fopen(closedOrdersTxt, "r+");
+			printf("All payment information:\n");
+			while (fscanf(file, "%f", &current) == 1) 
+			{
+				printf("%.2f\n", current);
+			}
+	}else
+	{
+		printf("Burası ortak alan \n");
+		file = fopen(closedOrdersTxt,"a+");
+		fprintf(file,"%f\n",billAmount);
+	}
+   
+    fclose(file);
+}
+
 
 // dosya var ise true , yok ise false
 bool isExistTable(char tableID[])
