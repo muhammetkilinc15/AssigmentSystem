@@ -12,7 +12,7 @@ extern char *closedOrdersTxt;
 extern char *takenOrdersTxt;
 extern char *logTtxt;
 
-void newOrder(char tableId[],int foodID,int amount)
+void placeNewOrder(char tableId[],int foodID,int amount)
 {
    FILE *file = fopen(takenOrdersTxt,"r+");
    takenOrders current;
@@ -38,7 +38,7 @@ void newOrder(char tableId[],int foodID,int amount)
        current.quantity=amount;
        strcpy(current.tableID,tableId);
 		
-       fwrite(&current,sizeof(current),1,file);//DOSYAYA YAZARKEN YEMEK İSMİNİ BİNARY YAZDIRIYOR
+       fwrite(&current,sizeof(current),1,file);
        fclose(file);
        printf("New order is added successfully....\n");
        char text[200];
@@ -51,7 +51,7 @@ void newOrder(char tableId[],int foodID,int amount)
    }
 }
 
-void updateAmount(char tableID[],int foodID,int amount)
+void updateQuantity(char tableID[],int foodID,int amount)
 {
     DIR *dir;
     dir= opendir(tableID);
@@ -64,7 +64,7 @@ void updateAmount(char tableID[],int foodID,int amount)
         bool isUpdated = false;
         while( !feof(file))
         {
-            if(foodID == current.f.foodID)//FoodId saçma değer döndürüyor
+            if(foodID == current.f.foodID)
             {
                 current.quantity = amount;
                 fseek(file, -sizeof(current), SEEK_CUR);
