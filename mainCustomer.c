@@ -30,11 +30,11 @@ int main()
 
             if(!isExistTable(tableId))
             {
-                printf("There is no table with the given id!!!");
+                printf("There is no table with the given id!!!\n");
             }
             else if(!isExistFood(foodId))
             {
-                printf("There is no food with the given id!!!");
+                printf("There is no food with the given id!!!\n");
             }
             else{
                 newOrder(tableId,foodId,amount);
@@ -57,7 +57,7 @@ int main()
 
             if(!isExistTable(tableId))
             {
-                printf("There is no table with the given id!!!");
+                printf("There is no table with the given id!!!\n");
             }
             else{
                 updateAmount(tableId,foodId,amount);
@@ -69,7 +69,7 @@ int main()
             scanf("%s",&tableId);
              if(!isExistTable(tableId))
             {
-                printf("There is no table with the given id!!!");
+                printf("There is no table with the given id!!!\n");
             }
             else{
                 payBill(tableId);
@@ -83,7 +83,7 @@ int main()
             scanf("%d",&foodId);
              if(!isExistTable(tableId))
             {
-                printf("There is no table with the given id!!!");
+                printf("There is no table with the given id!!!\n");
             }
             else{
                 cancelOrder(tableId,foodId);
