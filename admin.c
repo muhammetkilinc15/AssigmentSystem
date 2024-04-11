@@ -46,7 +46,7 @@ void deleteTable(char tableID[])
         rmdir(tableID); // table is deleted...
         printf("Table %s is deleted successfully....\n",tableID);
         char text[200];
-		sprintf(text,"Album %s is deleted successfully....\n",tableID);
+		sprintf(text,"Table %s is deleted successfully....\n",tableID);
 		writeToLogFile(text);
     }
     else
@@ -96,10 +96,15 @@ void checkNewOrder()
             }
             fwrite(&current, sizeof(current), 1, ordersFile);
             fclose(ordersFile);
+			char text[200];
+			sprintf(text,"New order for the table %s added to its order list successfully...\n",current.tableID);
+			writeToLogFile(text);
         }
         else
         {
-              printf("New order is cancelled....\n");
+           char text[200];
+			sprintf(text,"Order for table %s is canceled....\n",current.tableID);
+			writeToLogFile(text);
         }
     }
 }

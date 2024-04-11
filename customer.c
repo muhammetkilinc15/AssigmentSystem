@@ -80,7 +80,7 @@ void updateAmount(char tableID[],int foodID,int amount)
 
          if(isUpdated)
 		{
-            printf("Amount is updated...");
+            printf("Amount is updated...\n");
 			char text[200];
 			sprintf(text,"Amount of the food with id %d in table %s is updated as %d\n",foodID,tableID,amount);
 			writeToLogFile(text);
@@ -116,7 +116,7 @@ void payBill(char tableId[])
     printf("TOTAL FEE:%.2f\n",billAmount);
     printf("Payment received successfully....\n");
     char text[200];
-    sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE :%f\n",tableId,billAmount);
+    sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE:%f",tableId,billAmount);
     writeToLogFile(text);
 	operationForClosedOrders(1,billAmount);
 }
@@ -135,7 +135,11 @@ void cancelOrder(char tableId[],int foodId)
         {
             if(foodId == current.f.foodID)
             {
-				printf("sdfsdfs\n");
+				if(current.isActive==false)
+				{
+					printf("The order is already canceled. That's why it can't be updated!!!\n");
+					break;
+				}
                 current.isActive=false;
                 fseek(file, -sizeof(current), SEEK_CUR);
                 fwrite(&current,sizeof(current),1,file);
@@ -150,6 +154,10 @@ void cancelOrder(char tableId[],int foodId)
 			char text[200];
 			sprintf(text,"Order of the food with id %d in table %s is canceled \n",foodId,tableId);
 			writeToLogFile(text);
+		}
+		else
+		{
+			printf("Order not found!!!\n");
 		}
 
 }
