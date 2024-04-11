@@ -14,7 +14,7 @@ extern char *logTtxt;
 
 void newOrder(char tableId[],int foodID,int amount)
 {
-   FILE *file = fopen(takenOrdersTxt,"ab+");
+   FILE *file = fopen(takenOrdersTxt,"r+");
    takenOrders current;
    int size=fread(&current,sizeof(current),1,file);
    if(size==0)
