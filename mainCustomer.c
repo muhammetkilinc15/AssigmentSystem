@@ -37,7 +37,7 @@ int main()
                 printf("There is no food with the given id!!!\n");
             }
             else{
-                newOrder(tableId,foodId,amount);
+                placeNewOrder(tableId,foodId,amount);
             }
             break;
         case 3:
@@ -60,7 +60,7 @@ int main()
                 printf("There is no table with the given id!!!\n");
             }
             else{
-                updateAmount(tableId,foodId,amount);
+                updateQuantity(tableId,foodId,amount);
             }
             break;
 
