@@ -27,7 +27,7 @@ void placeNewOrder(char tableId[],int foodID,int amount)
     {
         if(foodID == currentF.foodID)
         {
-            break;                  //AYNI İŞLEM YAPILIYORRR
+            break;                  
         }
         fread(&currentF,sizeof(currentF),1,file2);
     } 

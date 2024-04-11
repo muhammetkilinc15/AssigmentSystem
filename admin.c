@@ -19,9 +19,11 @@ void createTable(char tableID[])
     {
 
         printf("Table %s is created successfully....\n",tableID);
-        mkdir(tableID,S_IRUSR |S_IWUSR |S_IXUSR);
+		// user ve grup üyeleri okuyabilir , yazabilir ve işlem yapabilir
+        mkdir(tableID,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP);
         strcat(tableID,"//");
         strcat(tableID,ordersTxt);
+		// ab+ append binary +(read and write) demek 
         FILE *file = fopen(tableID,"ab+");
         fclose(file);
         char text[200];
@@ -56,6 +58,7 @@ void deleteTable(char tableID[])
 }
 void checkNewOrder()
 {
+	// rb+ read binary +(read and write)
     FILE *file = fopen(takenOrdersTxt, "rb+");
     takenOrders current;
     size_t bytesRead = fread(&current, sizeof(current), 1, file);
@@ -71,7 +74,7 @@ void checkNewOrder()
         printf("size %d  \n", sizeof(current));
         showOrderTable(current);
         fclose(file);
-        // takenOrders.txt dosyasının içeriğini boşalt
+        // 	w+ write +(read and write)	takenOrders.txt dosyasının içeriğini boşalt
         file = fopen(takenOrdersTxt, "w+");
         fclose(file);
 
@@ -88,7 +91,7 @@ void checkNewOrder()
             strcat(temp, "//");
             strcat(temp, ordersTxt);
             current.isConfirmed=true;
-            // orders.txt dosyasını "ab+" modunda aç, current verisini yaz ve kapat
+            // orders.txt dosyasını "ab+ (append binary read and write)" modunda aç, current verisini yaz ve kapat
             FILE *ordersFile = fopen(temp, "ab+");
             if (ordersFile == NULL) {
                 perror("Error opening file");
@@ -118,6 +121,7 @@ void updateFood(int foodID,float fee)
 {
     if(isExistFood(foodID)==true)
     {
+		// rb+ read binary +(read and write)
         FILE *file = fopen(foodsTxt, "rb+");
         food current;
         fread(&current, sizeof(current),1,file);
