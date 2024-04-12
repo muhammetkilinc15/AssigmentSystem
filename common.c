@@ -5,7 +5,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <stdbool.h>
-#include "Common.h"
+#include "common.h"
 char *foodsTxt = "Foods.txt";
 char *ordersTxt = "Orders.txt";
 char *closedOrdersTxt = "ClosedOrders.txt";
@@ -31,10 +31,17 @@ void manageClosedOrders(int type,float billAmount)
 	if(type==0)
 	{
 			file = fopen(closedOrdersTxt, "r+");
-			printf("All payment information:\n");
-			while (fscanf(file, "%f", &current) == 1)
+			if(file==NULL)
 			{
-				printf("%.2f\n", current);
+				printf("No payment information!!!\n");
+
+			}else
+			{
+			printf("All payment information:\n");
+				while (fscanf(file, "%f", &current) == 1)
+				{
+				   printf("TOTAL FEE: %.2f\n", current);
+				}
 			}
 	}else
 	{
