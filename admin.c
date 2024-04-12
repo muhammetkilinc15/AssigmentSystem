@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
 #include <fcntl.h>
 #include <stdbool.h>
-#include "admin.h"
+#include "Admin.h"
 extern char *foodsTxt;
 extern char *ordersTxt;
 extern char *closedOrdersTxt;
@@ -19,11 +20,11 @@ void createTable(char tableID[])
     {
 
         printf("Table %s is created successfully....\n",tableID);
-		// user ve grup Ã¼yeleri okuyabilir , yazabilir ve iÅŸlem yapabilir
+		// user ve grup üyeleri okuyabilir , yazabilir ve iþlem yapabilir
         mkdir(tableID,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP);
         strcat(tableID,"//");
         strcat(tableID,ordersTxt);
-		// ab+ append binary +(read and write) demek 
+		// ab+ append binary +(read and write) demek
         FILE *file = fopen(tableID,"ab+");
         fclose(file);
         char text[200];
@@ -36,6 +37,8 @@ void createTable(char tableID[])
         printf("This table already exist!!!\n");
     }
 }
+
+
 void deleteTable(char tableID[])
 {
     if(isExistTable(tableID)==true)
@@ -74,7 +77,7 @@ void checkNewOrder()
         printf("size %d  \n", sizeof(current));
         showOrderTable(current);
         fclose(file);
-        // 	w+ write +(read and write)	takenOrders.txt dosyasÄ±nÄ±n iÃ§eriÄŸini boÅŸalt
+        // 	w+ write +(read and write)	takenOrders.txt dosyasýnýn içeriðini boþalt
         file = fopen(takenOrdersTxt, "w+");
         fclose(file);
 
@@ -83,7 +86,7 @@ void checkNewOrder()
 
         int selection = -1;
         scanf("%d", &selection);
-
+		char text[200];
         if (selection == 1) {
             printf("New order is taken successfully....\n");
             char temp[100];
@@ -91,7 +94,7 @@ void checkNewOrder()
             strcat(temp, "//");
             strcat(temp, ordersTxt);
             current.isConfirmed=true;
-            // orders.txt dosyasÄ±nÄ± "ab+ (append binary read and write)" modunda aÃ§, current verisini yaz ve kapat
+            // orders.txt dosyasýný "ab+ (append binary read and write)" modunda aç, current verisini yaz ve kapat
             FILE *ordersFile = fopen(temp, "ab+");
             if (ordersFile == NULL) {
                 perror("Error opening file");
@@ -99,13 +102,12 @@ void checkNewOrder()
             }
             fwrite(&current, sizeof(current), 1, ordersFile);
             fclose(ordersFile);
-			char text[200];
+
 			sprintf(text,"New order for the table %s added to its order list successfully...\n",current.tableID);
 			writeToLogFile(text);
         }
         else
         {
-           char text[200];
 			sprintf(text,"Order for table %s is canceled....\n",current.tableID);
 			writeToLogFile(text);
         }
@@ -114,7 +116,7 @@ void checkNewOrder()
 
 void showAllInvocies()
 {
-   operationForClosedOrders(0,0);
+   manageClosedOrders(0,0);
 }
 
 void updateFood(int foodID,float fee)
@@ -146,7 +148,8 @@ void updateFood(int foodID,float fee)
 			sprintf(text,"Fee of the food %d is updated as %f\n",foodID,fee);
 			writeToLogFile(text);
 		}
-    }else
+    }
+	else
     {
          printf("There is no food with the given food ID!!!\n");
     }

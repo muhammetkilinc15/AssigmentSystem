@@ -5,7 +5,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <stdbool.h>
-#include "common.h"
+#include "Common.h"
 char *foodsTxt = "Foods.txt";
 char *ordersTxt = "Orders.txt";
 char *closedOrdersTxt = "ClosedOrders.txt";
@@ -14,8 +14,7 @@ char *logTtxt = "log.txt";
 int numberOfFoods = 4;
 
 
-
-// This function appends the given text to a file named "log.txt".
+// This function appends the given text to a file named "log.txt".   | ********** UGUR TANSAL **********
 void writeToLogFile(char text[])
 {
     FILE *file = fopen(logTtxt,"a+");
@@ -23,17 +22,17 @@ void writeToLogFile(char text[])
     fclose(file);
 }
 
-// reading or writing closed orders 
-void operationForClosedOrders(int type,float billAmount)
+// If the type is zero, the admin is reading all payments; otherwise, the customer writing their orders payment  | ********** MUHAMMET KILINÇ **********
+void manageClosedOrders(int type,float billAmount)
 {
 	FILE *file ;
     float current;
-	
+
 	if(type==0)
 	{
 			file = fopen(closedOrdersTxt, "r+");
 			printf("All payment information:\n");
-			while (fscanf(file, "%f", &current) == 1) 
+			while (fscanf(file, "%f", &current) == 1)
 			{
 				printf("%.2f\n", current);
 			}
@@ -42,17 +41,27 @@ void operationForClosedOrders(int type,float billAmount)
 		file = fopen(closedOrdersTxt,"a+");
 		fprintf(file,"%f\n",billAmount);
 	}
-   
+
     fclose(file);
 }
 
 
-// dosya var ise true , yok ise false
+// This method check the if table is exist return true | ********** UGUR TANSAL **********
 bool isExistTable(char tableID[])
 {
-    return opendir(tableID)!=NULL;
+	DIR *dir = opendir(tableID);
+	if(dir !=NULL)
+	{
+		closedir(dir);
+		return true;
+	}else
+	{
+		closedir(dir);
+		return false;
+	}
 }
 
+// This method check the if food is exist return true | ********** MUHAMMET KILINÇ **********
 bool isExistFood(int foodID)
 {
     FILE *file = fopen(foodsTxt,"rb+");
@@ -62,6 +71,7 @@ bool isExistFood(int foodID)
     {
         if(foodID == current.foodID)
         {
+			fclose(file);
             return true;
         }
         fread(&current,sizeof(current),1,file);
@@ -72,6 +82,7 @@ bool isExistFood(int foodID)
 }
 
 
+// This method print the orders for the given table ID | ********** UGUR TANSAL **********
 void showOrderListTable(char tableID[])
 {
     if(isExistTable(tableID)==true)
@@ -100,6 +111,7 @@ void showOrderListTable(char tableID[])
     }
 }
 
+// This method print the orders                  | ********** UGUR TANSAL **********
 void showOrderTable(takenOrders currentTOrders)
 {
     printf("Table Id : %s\n",currentTOrders.tableID);
@@ -110,8 +122,7 @@ void showOrderTable(takenOrders currentTOrders)
 
 }
 
-
-// This method print the food
+// This method print the food                   | ********** MUHAMMET KILINÇ **********
 void displaySingleFood(food food)
 {
     printf("Food id : %d\n",food.foodID);
@@ -120,23 +131,16 @@ void displaySingleFood(food food)
 }
 
 
-// This function print the menu
+// This method print the all food               | ********** MUHAMMET KILINÇ **********
 void displayFoodMenu()
 {
-    DIR *dir;
-    char cwd[50];
-    getcwd(cwd,50);
-    dir = opendir(cwd);
-    strcat(cwd,"//");
-    strcat(cwd,foodsTxt);
     food currentFood;
-    FILE *file = fopen(cwd,"rb+");
+    FILE *file = fopen(foodsTxt,"rb+");
     for(int i = 0; i<numberOfFoods;i++)
     {
         fread(&currentFood, sizeof(currentFood),1,file);
         displaySingleFood(currentFood);
     }
     fclose(file);
-    closedir(dir);
 }
 

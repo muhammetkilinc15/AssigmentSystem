@@ -14,7 +14,7 @@ extern char *logTtxt;
 
 void placeNewOrder(char tableId[],int foodID,int amount)
 {
-   FILE *file = fopen(takenOrdersTxt,"r+");
+   FILE *file = fopen(takenOrdersTxt,"rb+");
    takenOrders current;
    int size=fread(&current,sizeof(current),1,file);
    if(size==0)
@@ -159,5 +159,4 @@ void cancelOrder(char tableId[],int foodId)
 		{
 			printf("Order not found!!!\n");
 		}
-
 }
