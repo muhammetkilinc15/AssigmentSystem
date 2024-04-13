@@ -17,6 +17,7 @@ void placeNewOrder(char tableId[],int foodID,int amount)
    FILE *file = fopen(takenOrdersTxt,"rb+");
    takenOrders current;
    int size=fread(&current,sizeof(current),1,file);
+   
    if(size==0)
    {
 	

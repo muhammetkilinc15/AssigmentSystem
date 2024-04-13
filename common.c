@@ -22,6 +22,13 @@ void truncateFile(char fileName[])
     fclose(file);
 }
 
+long getFileContentSize(FILE *file)
+{
+	fseek(file, 0, SEEK_END);
+    long size = ftell(file);
+    rewind(file);
+	return size;
+}
 
 // This function appends the given text to a file named "log.txt".   | ********** UGUR TANSAL **********
 void writeToLogFile(char text[])
@@ -114,7 +121,7 @@ void showOrderListTable(char tableID[])
         {
             printf("Food %d\n",i);
             i++;
-            showOrderTable(currentTOrders);
+            printTakenOrders(currentTOrders);
             printf("------------------------\n");
             fread(&currentTOrders,sizeof(currentTOrders),1,file);
         }

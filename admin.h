@@ -8,5 +8,4 @@ void checkNewOrder();
 void showAllInvocies();
 void updateFood(int foodID,float fee);
 
-
 #endif // ADMIN_H_INCLUDED
