@@ -15,14 +15,14 @@ int numberOfFoods = 4;
 
 
 
-// This method empties the content of the file.
+// This method empties the content of the file.  | ********** MUHAMMET KILINÇ **********
 void truncateFile(char fileName[])
 {
     FILE *file = fopen(fileName,"w");
     fclose(file);
 }
 
-long getFileContentSize(FILE *file)
+long getFileContentSize(FILE *file) // | ********** MUHAMMET KILINÇ **********
 {
 	fseek(file, 0, SEEK_END);
     long size = ftell(file);
