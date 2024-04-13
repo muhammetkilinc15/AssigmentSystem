@@ -128,7 +128,7 @@ void showOrderListTable(char tableID[])
 }
 
 // This method print the orders                  | ********** UGUR TANSAL **********
-void showOrderTable(takenOrders currentTOrders)
+void printTakenOrders(takenOrders currentTOrders)
 {
     printf("Table Id : %s\n",currentTOrders.tableID);
     displaySingleFood(currentTOrders.f);

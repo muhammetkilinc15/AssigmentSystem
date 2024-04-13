@@ -1,6 +1,6 @@
 #ifndef ADMIN_H_INCLUDED
 #define ADMIN_H_INCLUDED
-#include "Common.h"
+#include "common.h"
 
 void createTable(char tableID[]);
 void deleteTable(char tableID[]);

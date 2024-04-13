@@ -13,14 +13,16 @@ extern char *closedOrdersTxt;
 extern char *takenOrdersTxt;
 extern char *logTtxt;
 
-// This method create a new table.
+// This method creates a new table.
 void createTable(char tableID[])
 {
     if(isExistTable(tableID)==false)
     {
 
         printf("Table %s is created successfully....\n",tableID);
-        mkdir(tableID,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP);
+		// user ve grup üyeleri okuyabilir , yazabilir ve iþlem yapabilir
+		// ,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP
+        mkdir(tableID);
         strcat(tableID,"//");
         strcat(tableID,ordersTxt);
 		// ab+ append binary +(read and write) demek
@@ -37,7 +39,7 @@ void createTable(char tableID[])
     }
 }
 
-//  This method delete a  table
+
 void deleteTable(char tableID[])
 {
     if(isExistTable(tableID)==true)
@@ -58,8 +60,6 @@ void deleteTable(char tableID[])
         printf("There is no table with the given id!!!\n");
     }
 }
-
-
 void checkNewOrder()
 {
     takenOrders current;
@@ -79,7 +79,7 @@ void checkNewOrder()
     }
     else
     {
-        showOrderTable(current);
+        printTakenOrders(current); // display current order
         printf("Confirm Order?\nYes : 1\nNo  : 0\n");
         printf("Warning: Unconfirmed orders will be canceled!!!\nWarning: Approved orders are assigned to the relevant table!!!\n");
         int selection=-1;
@@ -88,7 +88,7 @@ void checkNewOrder()
 
         if(selection ==1 || selection == 0)
         {
-            truncateFile(takenOrdersTxt); 
+            truncateFile(takenOrdersTxt); // takenOrders.txt icini bosalttim
             if (selection == 1) {
                 printf("New order is taken successfully....\n");
                 char temp[100];

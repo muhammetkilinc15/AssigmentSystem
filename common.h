@@ -30,7 +30,7 @@ void displaySingleFood(food food);
 void displayFoodMenu();
 
 
-void showOrderTable(takenOrders currentTOrders);
+void printTakenOrders(takenOrders currentTOrders);
 void showOrderListTable(char tableID[]);
 
 
