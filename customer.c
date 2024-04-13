@@ -12,6 +12,7 @@ extern char *closedOrdersTxt;
 extern char *takenOrdersTxt;
 extern char *logTtxt;
 
+//This method to receive a new order
 void placeNewOrder(char tableId[],int foodID,int amount)
 {
    FILE *file = fopen(takenOrdersTxt,"rb+");
@@ -32,6 +33,7 @@ void placeNewOrder(char tableId[],int foodID,int amount)
         fread(&currentF,sizeof(currentF),1,file2);
     } 
 	   fclose(file2);
+
 	   current.f = currentF;
        current.isActive=true;
        current.isConfirmed=false;
@@ -41,6 +43,7 @@ void placeNewOrder(char tableId[],int foodID,int amount)
        fwrite(&current,sizeof(current),1,file);
        fclose(file);
        printf("New order is added successfully....\n");
+
        char text[200];
        sprintf(text,"New order for table %s is taken successfully....\n",tableId);
        writeToLogFile(text);
@@ -51,6 +54,7 @@ void placeNewOrder(char tableId[],int foodID,int amount)
    }
 }
 
+//This method updates the amount of food which taken
 void updateQuantity(char tableID[],int foodID,int amount)
 {
     DIR *dir;
@@ -91,6 +95,7 @@ void updateQuantity(char tableID[],int foodID,int amount)
 
 }
 
+//This method pays the bill
 void payBill(char tableId[])
 {
     strcat(tableId,"//");
@@ -110,8 +115,7 @@ void payBill(char tableId[])
         }
 
     fclose(file);
-    file = fopen(tableId, "w+");
-    fclose(file);
+    truncateFile(tableId);
     printf("TOTAL FEE:%.2f\n",billAmount);
     printf("Payment received successfully....\n");
     char text[200];
@@ -121,6 +125,7 @@ void payBill(char tableId[])
 }
 
 
+//This method cancels the meals that have been abandoned
 void cancelOrder(char tableId[],int foodId)
 {   DIR *dir;
     dir= opendir(tableId);
