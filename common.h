@@ -18,7 +18,7 @@ typedef struct takenOrders
     bool isActive;
 }takenOrders;
 
-
+long getFileContentSize(FILE *fp);
 
 void truncateFile(char fileName[]);
 

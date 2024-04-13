@@ -18,14 +18,10 @@ void createTable(char tableID[])
 {
     if(isExistTable(tableID)==false)
     {
-
         printf("Table %s is created successfully....\n",tableID);
-		// user ve grup üyeleri okuyabilir , yazabilir ve iþlem yapabilir
-		// ,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP
-        mkdir(tableID);
+        mkdir(tableID,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP); // S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP
         strcat(tableID,"//");
         strcat(tableID,ordersTxt);
-		// ab+ append binary +(read and write) demek
         FILE *file = fopen(tableID,"ab+");
         fclose(file);
         char text[200];
@@ -48,8 +44,8 @@ void deleteTable(char tableID[])
         strcpy(temp,tableID);
         strcat(temp,"//");
         strcat(temp,ordersTxt);
-        remove(temp); // orders.txt is deleted...
-        rmdir(tableID); // table is deleted...
+        remove(temp);
+        rmdir(tableID);
         printf("Table %s is deleted successfully....\n",tableID);
         char text[200];
 		sprintf(text,"Table %s is deleted successfully....\n",tableID);
@@ -60,15 +56,13 @@ void deleteTable(char tableID[])
         printf("There is no table with the given id!!!\n");
     }
 }
+
 void checkNewOrder()
 {
     takenOrders current;
     FILE *file = fopen(takenOrdersTxt, "rb+");
     fread(&current, sizeof(current), 1, file);
-
-    fseek(file, 0, SEEK_END);
-    long size = ftell(file);
-    rewind(file);
+    long size = getFileContentSize(file);
     fclose(file);
 
     printf("Size: %ld\n",size);
@@ -77,9 +71,8 @@ void checkNewOrder()
         printf("No new orders...\n");
         return;
     }
-    else
-    {
-        printTakenOrders(current); // display current order
+
+        printTakenOrders(current);
         printf("Confirm Order?\nYes : 1\nNo  : 0\n");
         printf("Warning: Unconfirmed orders will be canceled!!!\nWarning: Approved orders are assigned to the relevant table!!!\n");
         int selection=-1;
@@ -88,16 +81,15 @@ void checkNewOrder()
 
         if(selection ==1 || selection == 0)
         {
-            truncateFile(takenOrdersTxt); // takenOrders.txt icini bosalttim
+            truncateFile(takenOrdersTxt);
             if (selection == 1) {
                 printf("New order is taken successfully....\n");
                 char temp[100];
-                strcpy(temp, current.tableID);
-                strcat(temp, "//");
-                strcat(temp, ordersTxt);
+                sprintf(temp, "%s//%s", current.tableID, ordersTxt);
                 current.isConfirmed=true;
 
                 FILE *ordersFile = fopen(temp, "ab+");
+
                 fwrite(&current, sizeof(current), 1, ordersFile);
                 fclose(ordersFile);
 
@@ -110,7 +102,7 @@ void checkNewOrder()
                 writeToLogFile(text);
             }
         }
-    }
+
 }
 
 
