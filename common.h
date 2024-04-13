@@ -19,6 +19,9 @@ typedef struct takenOrders
 }takenOrders;
 
 
+
+void truncateFile(char fileName[]);
+
 void writeToLogFile(char text[]);
 
 void manageClosedOrders(int type,float billAmount);
@@ -34,7 +37,5 @@ void showOrderListTable(char tableID[]);
 
 bool isExistTable(char tableID[]);
 bool isExistFood(int foodId);
-
-
 
 #endif // COMMON_H_INCLUDED

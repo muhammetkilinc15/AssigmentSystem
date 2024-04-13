@@ -14,6 +14,15 @@ char *logTtxt = "log.txt";
 int numberOfFoods = 4;
 
 
+
+// This method empties the content of the file.
+void truncateFile(char fileName[])
+{
+    FILE *file = fopen(fileName,"w");
+    fclose(file);
+}
+
+
 // This function appends the given text to a file named "log.txt".   | ********** UGUR TANSAL **********
 void writeToLogFile(char text[])
 {
@@ -37,7 +46,7 @@ void manageClosedOrders(int type,float billAmount)
 
 			}else
 			{
-			printf("All payment information:\n");
+                printf("All payment information:\n");
 				while (fscanf(file, "%f", &current) == 1)
 				{
 				   printf("TOTAL FEE: %.2f\n", current);

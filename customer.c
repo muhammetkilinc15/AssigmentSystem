@@ -77,8 +77,7 @@ void updateQuantity(char tableID[],int foodID,int amount)
         fclose(file);
         closedir(dir);
 
-
-         if(isUpdated)
+        if(isUpdated)
 		{
             printf("Amount is updated...\n");
 			char text[200];
@@ -118,7 +117,7 @@ void payBill(char tableId[])
     char text[200];
     sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE:%f",tableId,billAmount);
     writeToLogFile(text);
-	operationForClosedOrders(1,billAmount);
+	manageClosedOrders(1,billAmount);
 }
 
 
