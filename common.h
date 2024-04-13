@@ -24,16 +24,11 @@ void truncateFile(char fileName[]);
 
 void writeToLogFile(char text[]);
 
-void manageClosedOrders(int type,float billAmount);
-
 void displaySingleFood(food food);
 void displayFoodMenu();
 
-
 void printTakenOrders(takenOrders currentTOrders);
 void showOrderListTable(char tableID[]);
-
-
 
 bool isExistTable(char tableID[]);
 bool isExistFood(int foodId);

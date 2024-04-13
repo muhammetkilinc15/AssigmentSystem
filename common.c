@@ -38,35 +38,6 @@ void writeToLogFile(char text[])
     fclose(file);
 }
 
-// If the type is zero, the admin is reading all payments; otherwise, the customer writing their orders payment  | ********** MUHAMMET KILINÇ **********
-void manageClosedOrders(int type,float billAmount)
-{
-	FILE *file ;
-    float current;
-
-	if(type==0)
-	{
-			file = fopen(closedOrdersTxt, "r+");
-			if(file==NULL)
-			{
-				printf("No payment information!!!\n");
-
-			}else
-			{
-                printf("All payment information:\n");
-				while (fscanf(file, "%f", &current) == 1)
-				{
-				   printf("TOTAL FEE: %.2f\n", current);
-				}
-			}
-	}else
-	{
-		file = fopen(closedOrdersTxt,"a+");
-		fprintf(file,"%f\n",billAmount);
-	}
-
-    fclose(file);
-}
 
 
 // This method check the if table is exist return true | ********** UGUR TANSAL **********

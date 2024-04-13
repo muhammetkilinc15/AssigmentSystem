@@ -108,7 +108,21 @@ void checkNewOrder()
 
 void showAllInvocies()
 {
-   manageClosedOrders(0,0);
+   FILE *file ;
+   float current;
+   file = fopen(closedOrdersTxt, "r+");
+	if(file==NULL)
+	{
+		printf("No payment information!!!\n");
+		return;
+	}
+
+	printf("All payment information:\n");
+	while (fscanf(file, "%f", &current) == 1)
+	{
+		printf("TOTAL FEE: %.2f\n", current);
+	}
+
 }
 
 void updateFood(int foodID,float fee)
