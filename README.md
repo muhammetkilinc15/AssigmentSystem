@@ -6,9 +6,6 @@
   <li>Projedeki asıl amaç birlikte çalışmayı öğrenmektir.</li>
 </ol>
 
-
-
-
 **Projeye ait Fotoğraflar** 
 
  🧑‍💻 Admin Panel 🧑‍💻
