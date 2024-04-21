@@ -120,7 +120,7 @@ void payBill(char tableId[])
     printf("TOTAL FEE:%.2f\n",billAmount);
     printf("Payment received successfully....\n");
     char text[200];
-    sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE:%f",tableId,billAmount);
+    sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE:%f\n",tableId,billAmount);
     writeToLogFile(text);
 	file = fopen(closedOrdersTxt,"a+");
 	fprintf(file,"%f\n",billAmount);

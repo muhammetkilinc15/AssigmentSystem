@@ -130,7 +130,7 @@ void updateFood(int foodID,float fee)
     if(isExistFood(foodID)==true)
     {
 
-        FILE *file = fopen(foodsTxt, "rb+"); // rb+ read binary +(read and write)
+        FILE *file = fopen(foodsTxt, "rb+"); 
         food current;
         fread(&current, sizeof(current),1,file);
         bool isUpdated = false;
