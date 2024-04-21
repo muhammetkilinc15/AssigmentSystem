@@ -19,7 +19,7 @@ void createTable(char tableID[])
     if(isExistTable(tableID)==false)
     {
         printf("Table %s is created successfully....\n",tableID);
-        mkdir(tableID,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP); // S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP
+        mkdir(tableID,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP); 
         strcat(tableID,"//");
         strcat(tableID,ordersTxt);
         FILE *file = fopen(tableID,"ab+");
