@@ -13,13 +13,13 @@ extern char *closedOrdersTxt;
 extern char *takenOrdersTxt;
 extern char *logTtxt;
 
-// This method creates a new table.
+
 void createTable(char tableID[])
 {
     if(isExistTable(tableID)==false)
     {
         printf("Table %s is created successfully....\n",tableID);
-        mkdir(tableID); //S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP
+        mkdir(tableID,S_IRUSR |S_IWUSR |S_IXUSR |  S_IRGRP |  S_IWGRP |  S_IXGRP);
         strcat(tableID,"//");
         strcat(tableID,ordersTxt);
         FILE *file = fopen(tableID,"ab+");
@@ -35,7 +35,6 @@ void createTable(char tableID[])
     }
 }
 
-// This method to delete a table.
 void deleteTable(char tableID[])
 {
     if(isExistTable(tableID)==true)
@@ -57,7 +56,7 @@ void deleteTable(char tableID[])
     }
 }
 
-// This method  to if a new order exists , admin can accept or canceled the order
+
 void checkNewOrder()
 {
     takenOrders current;
@@ -106,7 +105,7 @@ void checkNewOrder()
 
 }
 
-// This method to show the all payments
+
 void showAllInvocies()
 {
    FILE *file ;
@@ -126,7 +125,7 @@ void showAllInvocies()
 
 }
 
-// This method for admin update the food price
+
 void updateFood(int foodID,float fee)
 {
     if(isExistFood(foodID)==true)
