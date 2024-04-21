@@ -69,7 +69,7 @@ void updateQuantity(char tableID[],int foodID,int amount)
         bool isUpdated = false;
         while( !feof(file))
         {
-            if(foodID == current.f.foodID)
+            if(foodID == current.f.foodID && current.isActive)
             {
                 current.quantity = amount;
                 fseek(file, -sizeof(current), SEEK_CUR);
@@ -120,10 +120,10 @@ void payBill(char tableId[])
     printf("TOTAL FEE:%.2f\n",billAmount);
     printf("Payment received successfully....\n");
     char text[200];
-    sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE:%f",tableId,billAmount);
+    sprintf(text,"Payment of the table %s received successfully....\nTOTAL FEE:%.2f\n",tableId,billAmount);
     writeToLogFile(text);
-	file = fopen(closedOrdersTxt,"a+");
-	fprintf(file,"%f\n",billAmount);
+	 FILE *file2 = fopen(closedOrdersTxt,"a+");
+	fprintf(file2,"%f\n",billAmount);
 }
 
 
@@ -150,6 +150,7 @@ void cancelOrder(char tableId[],int foodId)
                 fseek(file, -sizeof(current), SEEK_CUR);
                 fwrite(&current,sizeof(current),1,file);
                 isCanceled = true;
+                break;
             }
             fread(&current, sizeof(current),1,file);
         }
